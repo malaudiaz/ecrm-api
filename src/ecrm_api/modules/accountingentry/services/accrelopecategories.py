@@ -18,8 +18,8 @@ from ecrm_api.core.config import settings
 from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult, ObjectResult
 
-from ecrm_api.modules.accountingentry.models import AccountingRelOperationsCategories
-from ecrm_api.modules.accountingentry.presenters import AccountingRelOperationsCategoriesBase
+from ecrm_api.modules.accountingentry.models.accrelopecategories import AccountingRelOperationsCategories
+from ecrm_api.modules.accountingentry.presenters.accrelopecategories import AccountingRelOperationsCategoriesBase
 
 
 def new(request, opecategory: AccountingRelOperationsCategoriesBase, db: Session):

@@ -7,8 +7,8 @@ from typing import List
 from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult, ObjectResult
 
-from ecrm_api.modules.accountingentry.presenters import AccountingRelOperationsCategoriesBase
-from ecrm_api.modules.accountingentry.services import get_all, new, delete
+from ecrm_api.modules.accountingentry.presenters.accrelopecategories import AccountingRelOperationsCategoriesBase
+from ecrm_api.modules.accountingentry.services.accrelopecategories import get_all, new, delete
 
 accountingentry_router = APIRouter(
     prefix="/accountingentry",

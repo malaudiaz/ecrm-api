@@ -1,1 +1,1 @@
-from ecrm_api.modules.accountingentry.models import *
+from ecrm_api.modules.accountingentry.models.accrelopecategories import *
