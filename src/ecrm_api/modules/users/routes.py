@@ -6,7 +6,7 @@ from ecrm_api.modules.users.presenters import Users
 from typing import List
 from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult
-from ecrm_api.modules.users.presenters import UserCreate, UserResult, ListUserResult
+from ecrm_api.modules.users.presenters import UserCreate, ListUserResult
 
 users_router = APIRouter(
     prefix="/users",
