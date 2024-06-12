@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from ecrm_api.modules.login.routes import login_router
-from ecrm_api.modules.users.routes import users_router
+from ecrm_api.modules.users.routes.users import users_router
 from ecrm_api.modules.accountingentry.routes.accrelopecategories import accountingentry_router
 
 api_router = APIRouter()

@@ -28,8 +28,8 @@ async def get_me(request: Request):
     return JSONResponse(
         {
             "user_id": user["user_id"],
-            "username": user["username"],
-            "name": user["name"],
+            "user_name": user["user_name"],
+            "display_name": user["display_name"],
         },
         status_code=200,
     )

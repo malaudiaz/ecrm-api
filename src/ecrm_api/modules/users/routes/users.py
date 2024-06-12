@@ -2,11 +2,11 @@ from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import Depends, Request
 from ecrm_api.core.auth_bearer import JWTBearer
-from ecrm_api.modules.users.presenters import Users
+from ecrm_api.modules.users.presenters.users import Users
 from typing import List
 from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult
-from ecrm_api.modules.users.presenters import UserCreate, ListUserResult
+from ecrm_api.modules.users.presenters.users import UserCreate, ListUserResult
 
 users_router = APIRouter(
     prefix="/users",

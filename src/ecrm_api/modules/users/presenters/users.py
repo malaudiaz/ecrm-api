@@ -7,17 +7,16 @@ from typing import Optional, List
 from ecrm_api.core.presenters import ObjectResult
  
 class UserBase(BaseModel):
-    username: str
-    first_name: str
+    user_name: str
+    display_name: str
     last_name: Optional[str]
-    email: Optional[str]
-    phone: Optional[str]
+    email_address: Optional[str]
     
-    @field_validator('username')
-    def username_not_empty(cls, username):
-        if not username:
+    @field_validator('user_name')
+    def user_name_not_empty(cls, user_name):
+        if not user_name:
             raise ValueError('Nombre de usuario requerido')
-        return username  
+        return user_name  
 
 class UserCreate(UserBase):
     password: str 
@@ -29,14 +28,25 @@ class UserCreate(UserBase):
         return password 
 
 class UserShema(UserCreate):
-    id: UUID
+    user_id: UUID
     is_active: bool
+    changed: bool
+    verify_ldap: bool
+    
+    created: datetime = datetime.today()
+    created_by: str
+    created_date: datetime = datetime.today()
+    updated_by: str
+    updated_date: datetime = datetime.today()
+    
+    last_auth: datetime = datetime.today()
+    last_auth_from: str
     
     class Config:
         from_attributes = True
       
 class ChagePasswordSchema(BaseModel):
-    id: Optional[str]
+    user_id: Optional[str]
     current_password: str
     new_password: str
     renew_password: str
@@ -60,12 +70,10 @@ class ChagePasswordSchema(BaseModel):
         return renew_password 
    
 class Users(BaseModel):
-    id: str
-    username: str
-    first_name: str
-    last_name: str
-    email: str
-    phone: str
+    user_id: str
+    user_name: str
+    display_name: str
+    email_address: str
     
 class UserResult(ObjectResult):
     data: Users

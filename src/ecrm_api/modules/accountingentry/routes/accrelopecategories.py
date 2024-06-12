@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import Depends, Request
 from ecrm_api.core.auth_bearer import JWTBearer
-from ecrm_api.modules.users.presenters import Users
 from typing import List
 from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult, ObjectResult

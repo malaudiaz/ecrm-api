@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class UserLogin(BaseModel):
-    username: str
+    user_name: str
     password: str
 
 class AuthToken(BaseModel):
@@ -13,5 +13,5 @@ class AuthToken(BaseModel):
     
 class WhoIs(BaseModel):
     user_id: str
-    username: str
-    name: str
+    user_name: str
+    display_name: str
