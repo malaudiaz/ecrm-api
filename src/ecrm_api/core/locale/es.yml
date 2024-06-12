@@ -1,0 +1,35 @@
+es:
+  greetings:
+    hello_name: "Hola {name}, un gusto conocerte." 
+  bearer:    
+    scheme: "Esquema de autentificación incorrecto."
+    token: "Token erróneo o vencido."
+    credential: "Código de autorización erróneo."
+  auth:
+    me: 'Obtiene información del usuario autentificado.'    
+    not_found: "Usuario no encontrado."
+    wrong_password: "Contraseña incorrecta." 
+    not_registered: 'Usuario no activado.'
+  commun:
+    invalid_param: 'Parámetro de consultas no válidos.'
+    error_writing_bd: 'Error escribiendo en Base de datos'
+  users:
+    data_error: 'Estructura de la contraseña incorrecta.'
+    new_user_error: 'Error creando nuevo usuario.'
+    already_exist: 'Nombre de usuario existe.'
+    not_found: 'Nombre de usuario no existe.'
+    imposible_delete: 'No se puede desactivar al usuario'
+    check_password: 'Contraseña anterior y nueva no coinciden.'
+    new_password_incorrect: 'Estructura de la nueva contraseña incorrecta.'
+    change_password_error: 'Error cambiando contraseña.'
+    wrong_password: 'Contraaseña incorrecta.'  
+    imposible_verify: 'No es posible Verificar'
+    incorrect_code: 'Código incorrecto.'
+    user_name_empty: 'Nombre de usuario es requerido'
+    first_name_empty: 'Nombre No puede ser vacio '
+  accountingentry:
+    exist_name: 'Existe pais con ese nombre.'
+    error_new_contry: 'Error creando el nuevo pais.'
+    already_exist: 'País existe.'
+    not_found: 'País no existe.'
+    imposible_delete: 'No se puede desactivar país.' 
