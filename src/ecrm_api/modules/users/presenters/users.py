@@ -9,7 +9,6 @@ from ecrm_api.core.presenters import ObjectResult
 class UserBase(BaseModel):
     user_name: str
     display_name: str
-    last_name: Optional[str]
     email_address: Optional[str]
     
     @field_validator('user_name')
@@ -27,6 +26,11 @@ class UserCreate(UserBase):
             raise ValueError('Contraseña Requerida')
         return password 
 
+class UserUpdate(BaseModel):
+    display_name: str
+    email_address: Optional[str]
+    verify_ldap: Optional[bool] = True
+    
 class UserShema(UserCreate):
     user_id: UUID
     is_active: bool
@@ -45,17 +49,12 @@ class UserShema(UserCreate):
     class Config:
         from_attributes = True
       
-class ChagePasswordSchema(BaseModel):
+class ChangePasswordSchema(BaseModel):
     user_id: Optional[str]
-    current_password: str
+    current_password: Optional[str]
     new_password: str
     renew_password: str
-    
-    @field_validator('current_password')
-    def current_password_not_empty(cls, current_password):
-        if not current_password:
-            raise ValueError('Contraseña Actual es Requerido')
-        return current_password
+    by_data_migration: bool = False
     
     @field_validator('current_password')
     def new_password_not_empty(cls, new_password):

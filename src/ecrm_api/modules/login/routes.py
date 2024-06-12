@@ -25,11 +25,5 @@ async def login(request: Request, user: UserLogin, db: Session = Depends(get_db)
 )
 async def get_me(request: Request):
     user = get_current_user(request)
-    return JSONResponse(
-        {
-            "user_id": user["user_id"],
-            "user_name": user["user_name"],
-            "display_name": user["display_name"],
-        },
-        status_code=200,
-    )
+    return JSONResponse(content=user, status_code=200)
+
