@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     server_uri: str
     server_port: str
     database_uri: str
+    ext_db_uri: str
     secret: str
     access_token_expire_minutes: int    
     algorithm: str

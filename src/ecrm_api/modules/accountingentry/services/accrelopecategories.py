@@ -13,9 +13,12 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from fastapi.responses import JSONResponse
 
 from ecrm_api.core.config import settings
+
 # from ecrm_api.app import _
 
-from ecrm_api.core.persistence.db import get_db
+# probar esto
+from ecrm_api.core.persistence.db import get_ext_db
+
 from ecrm_api.core.presenters import BaseResult, ObjectResult
 
 from ecrm_api.modules.accountingentry.models.accrelopecategories import AccountingRelOperationsCategories
@@ -24,6 +27,9 @@ from ecrm_api.modules.accountingentry.presenters.accrelopecategories import Acco
 
 def new(request, opecategory: AccountingRelOperationsCategoriesBase, db: Session):
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
+    
+    
+    ext_db = get_ext_db();
     
     #verificar que no se encuentre ya esa categoria en esa tipo de operación
     res = ObjectResult
