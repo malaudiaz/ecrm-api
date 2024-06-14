@@ -4,7 +4,7 @@ from fastapi import Depends, Request
 from ecrm_api.core.auth_bearer import JWTBearer
 from ecrm_api.modules.users.presenters.users import Users
 from typing import List
-from ecrm_api.core.persistence.db import get_db
+from ecrm_api.core.persistence.db import get_db, get_ext_db
 from ecrm_api.core.presenters import BaseResult
 from ecrm_api.modules.users.presenters.users import (
     UserCreate,
@@ -38,11 +38,11 @@ async def get_user(
     page: int = 1,
     per_page: int = 6,
     search: str = "",
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    ext_db: Session = Depends(get_ext_db)
 ):
     return get_all(
-        request=request, page=page, per_page=per_page, criteria_value=search, db=db
-    )
+        request=request, page=page, per_page=per_page, criteria_value=search, db=db, ext_db=ext_db)
 
 
 @users_router.get(

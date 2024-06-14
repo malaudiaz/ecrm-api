@@ -16,7 +16,9 @@ from fastapi.responses import JSONResponse
 from ecrm_api.core.config import settings
 # from ecrm_api.app import _
 
-from ecrm_api.core.persistence.db import get_db
+from ecrm_api.core.persistence.db import get_ext_db, get_db
+
+# from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult, ObjectResult
 from ecrm_api.core.utils import get_result_count
 
@@ -113,7 +115,7 @@ def get_one_by_id(request: Request, user_id: str, db: Session):
     result.data = db_user.dict()
     return result
 
-def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session):    
+def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session, ext_db: Session):    
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
     
     str_where = "WHERE is_active=True " 
@@ -122,6 +124,8 @@ def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: 
     str_count = "Select count(*) " + str_from
     str_query = "Select user_id, user_name, display_name, email_address, last_auth, last_auth_from, verify_ldap " + str_from
 
+    # ext_db = get_ext_db()
+    
     str_search = ''
     if criteria_value:
         str_search = "AND (user_name ilike '%" + criteria_value + "%' OR display_name ilike '%" + criteria_value +\
@@ -147,7 +151,17 @@ def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: 
         str_query += "LIMIT " + str(per_page) + " OFFSET " + str(page*per_page-per_page)
     
     lst_data = db.execute(text(str_query)).all()
-    result.data = [create_dict_row(item) for item in lst_data]
+    # result.data = [create_dict_row(item) for item in lst_data]
+    lsr_result_data = [create_dict_row(item) for item in lst_data]
+    
+    str_domino = "SELECT * FROM federations.federations ORDER BY id ASC"
+    lst_dom = ext_db.execute(text(str_domino)).all()
+    
+    lst_all_dom = []
+    for item in lst_dom:
+        lst_all_dom.append({'id': item.id, 'name': item.name})
+    
+    result.data = {'users': lsr_result_data, 'fed': lst_all_dom}
     
     return result
 

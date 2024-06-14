@@ -29,7 +29,7 @@ def new(request, opecategory: AccountingRelOperationsCategoriesBase, db: Session
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
     
     
-    ext_db = get_ext_db();
+    ext_db = get_ext_db()
     
     #verificar que no se encuentre ya esa categoria en esa tipo de operación
     res = ObjectResult

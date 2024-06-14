@@ -30,9 +30,9 @@ def get_db():
         db.close()
 
 def get_ext_db():
-    db = SessionExt()
+    ext_db = SessionExt()
     try:
-        yield db
+        yield ext_db
     finally:
-        db.close()
+        ext_db.close()
 
