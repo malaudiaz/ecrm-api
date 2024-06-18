@@ -38,11 +38,11 @@ async def get_user(
     page: int = 1,
     per_page: int = 6,
     search: str = "",
-    db: Session = Depends(get_db),
-    ext_db: Session = Depends(get_ext_db)
+    db: Session = Depends(get_db)
+    # ext_db: Session = Depends(get_ext_db)
 ):
     return get_all(
-        request=request, page=page, per_page=per_page, criteria_value=search, db=db, ext_db=ext_db)
+        request=request, page=page, per_page=per_page, criteria_value=search, db=db)
 
 
 @users_router.get(

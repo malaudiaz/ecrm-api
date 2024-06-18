@@ -115,7 +115,7 @@ def get_one_by_id(request: Request, user_id: str, db: Session):
     result.data = db_user.dict()
     return result
 
-def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session, ext_db: Session):    
+def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session): #, ext_db: Session):    
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
     
     str_where = "WHERE is_active=True " 
@@ -124,7 +124,7 @@ def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: 
     str_count = "Select count(*) " + str_from
     str_query = "Select user_id, user_name, display_name, email_address, last_auth, last_auth_from, verify_ldap " + str_from
 
-    # ext_db = get_ext_db()
+    ext_db = next(get_ext_db())
     
     str_search = ''
     if criteria_value:
