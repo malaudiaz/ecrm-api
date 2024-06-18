@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class UserLogin(BaseModel):
-    user_name: str
+    username: str
     password: str
 
 class AuthToken(BaseModel):
