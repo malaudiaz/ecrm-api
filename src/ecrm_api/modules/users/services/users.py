@@ -261,10 +261,10 @@ def change_password(request: Request, db: Session, password: ChangePasswordSchem
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
     
     result = BaseResult
-    currentUser = get_current_user(request)
     
     # if el id viene vacio cojo el usario logueado
     if not password.user_id:
+        currentUser = get_current_user(request)
         one_user = get_one_by_user_name(username=currentUser['user_name'], db=db)
     else:
         one_user = get_one(user_id=password.user_id, db=db)
@@ -288,7 +288,7 @@ def change_password(request: Request, db: Session, password: ChangePasswordSchem
     #cambiando el paswword al usuario
     one_user.password = pwd_context.hash(password.new_password)
     
-    one_user.updated_by = currentUser['user_name']
+    # one_user.updated_by = currentUser['user_name']
     one_user.updated_date = datetime.now()
     
     try:
