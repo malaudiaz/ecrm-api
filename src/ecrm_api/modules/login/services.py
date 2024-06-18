@@ -39,7 +39,7 @@ def auth(request: Request, db: Session, user: UserLogin):
 
     str_query = "SELECT us.user_id, us.user_name, us.display_name, us.is_active, password " +\
         "FROM usermgr.users us "+\
-        "WHERE us.user_name = '" + user.user_name + "' "
+        "WHERE us.user_name = '" + user.username + "' "
              
    
     lst_data = db.execute(text(str_query))
