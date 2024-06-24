@@ -61,9 +61,9 @@ def auth(request: Request, db: Session, user: UserLogin):
         raise HTTPException(status_code=404, detail="auth.not_registered")
 
     if pwd_context.verify(user.password, password):
-        token_data = {"user_name": user_name, "user_id": user_id, "name": display_name}
+        token_data = {"user_name": user_name, "id": user_id, "name": display_name, "profile":'', 'image':''}
 
-        response = JSONResponse(content={"access_token":write_token(data=token_data), "token_type":"bearer"},
+        response = JSONResponse(content={"access_token":write_token(data=token_data), "token_type":"bearer", "token_data": token_data},
                                 status_code=200)
 
         return response
