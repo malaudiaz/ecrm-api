@@ -6,6 +6,9 @@ from ecrm_api.modules.users.presenters.users import Users
 from typing import List
 from ecrm_api.core.persistence.db import get_db, get_ext_db
 from ecrm_api.core.presenters import BaseResult
+
+from ecrm_api.core.functions_jwt import get_user_current
+
 from ecrm_api.modules.users.presenters.users import (
     UserCreate,
     UserUpdate,
@@ -31,7 +34,7 @@ users_router = APIRouter(
     "/",
     response_model=BaseResult,
     summary="Obtener todos los usuarios",
-    dependencies=[Depends(JWTBearer())],
+    dependencies=[Depends(get_user_current)],
 )
 async def get_user(
     request: Request,
@@ -39,7 +42,6 @@ async def get_user(
     per_page: int = 6,
     search: str = "",
     db: Session = Depends(get_db)
-    # ext_db: Session = Depends(get_ext_db)
 ):
     return get_all(
         request=request, page=page, per_page=per_page, criteria_value=search, db=db)
@@ -49,7 +51,7 @@ async def get_user(
     "/{user_id}",
     response_model=BaseResult,
     summary="Obtener un usuario por su ID",
-    dependencies=[Depends(JWTBearer())],
+    dependencies=[Depends(get_user_current)],
 )
 async def get_user(request: Request, user_id: str, db: Session = Depends(get_db)):
     return get_one_by_id(request=request, user_id=user_id, db=db)
@@ -59,7 +61,7 @@ async def get_user(request: Request, user_id: str, db: Session = Depends(get_db)
     "/",
     response_model=BaseResult,
     summary="Crear un nuevo usuario",
-    dependencies=[Depends(JWTBearer())],
+    dependencies=[Depends(get_user_current)],
 )
 async def create_user(
     request: Request, user: UserCreate, db: Session = Depends(get_db)
@@ -71,7 +73,7 @@ async def create_user(
     "/{user_id}",
     response_model=BaseResult,
     summary="Actualizar un usuario",
-    dependencies=[Depends(JWTBearer())],
+    dependencies=[Depends(get_user_current)],
 )
 async def update_user(
     request: Request, user_id: str, user: UserUpdate, db: Session = Depends(get_db)
@@ -83,7 +85,7 @@ async def update_user(
     "/{user_id}",
     response_model=BaseResult,
     summary="Eliminar un usuario",
-    dependencies=[Depends(JWTBearer())],
+    dependencies=[Depends(get_user_current)],
 )
 async def delete_user(request: Request, user_id: str, db: Session = Depends(get_db)):
     return delete(request=request, user_id=user_id, db=db)
