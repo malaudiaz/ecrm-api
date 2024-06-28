@@ -48,13 +48,13 @@ async def get_user(
 
 
 @users_router.get(
-    "/{user_id}",
+    "/{id}",
     response_model=BaseResult,
     summary="Obtener un usuario por su ID",
     dependencies=[Depends(get_user_current)],
 )
-async def get_user(request: Request, user_id: str, db: Session = Depends(get_db)):
-    return get_one_by_id(request=request, user_id=user_id, db=db)
+async def get_user(request: Request, id: str, db: Session = Depends(get_db)):
+    return get_one_by_id(request=request, user_id=id, db=db)
 
 
 @users_router.post(
@@ -70,25 +70,25 @@ async def create_user(
 
 
 @users_router.put(
-    "/{user_id}",
+    "/{id}",
     response_model=BaseResult,
     summary="Actualizar un usuario",
     dependencies=[Depends(get_user_current)],
 )
 async def update_user(
-    request: Request, user_id: str, user: UserUpdate, db: Session = Depends(get_db)
+    request: Request, id: str, user: UserUpdate, db: Session = Depends(get_db)
 ):
-    return update(request=request, user_id=user_id, user=user, db=db)
+    return update(request=request, user_id=id, user=user, db=db)
 
 
 @users_router.delete(
-    "/{user_id}",
+    "/{id}",
     response_model=BaseResult,
     summary="Eliminar un usuario",
     dependencies=[Depends(get_user_current)],
 )
-async def delete_user(request: Request, user_id: str, db: Session = Depends(get_db)):
-    return delete(request=request, user_id=user_id, db=db)
+async def delete_user(request: Request, id: str, db: Session = Depends(get_db)):
+    return delete(request=request, user_id=id, db=db)
 
 
 # @users_router.post("/password", response_model=BaseResult, summary="Change password to a user.", dependencies=[Depends(JWTBearer())])

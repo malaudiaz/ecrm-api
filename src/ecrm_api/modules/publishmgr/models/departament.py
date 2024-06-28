@@ -16,8 +16,8 @@ class PublishDepartament(Base):
     __table_args__ = {'schema' : 'publishmgr'}
     
     eid = Column(String, primary_key=True, default=generate_uuid)
-    code = Column(Unicode(10))
-    name = Column(Unicode(120))
+    code = Column(Unicode(10), nullable=False)
+    name = Column(Unicode(120), nullable=False)
     comercial_group_eid = Column(Unicode(120))
     
     store_code_legal = Column(Unicode(6))
