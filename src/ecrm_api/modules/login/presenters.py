@@ -1,7 +1,19 @@
 """coding=utf-8."""
  
+from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
+from typing import Union
 
+oauth2_scheme = OAuth2PasswordBearer("/api/v1/login")
+
+class User(BaseModel):
+    username: str
+    full_name: Union[str, None] = None    
+    email: Union[str, None] = None   
+    disabled: Union[bool, None] = None 
+    
+class UserInDB(User):
+    hashed_password: str  
 
 class UserLogin(BaseModel):
     username: str
@@ -12,6 +24,5 @@ class AuthToken(BaseModel):
     token_type: str
     
 class WhoIs(BaseModel):
-    user_id: str
-    user_name: str
-    display_name: str
+    sub: str
+    exp: int

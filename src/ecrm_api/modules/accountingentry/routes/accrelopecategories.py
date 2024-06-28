@@ -6,13 +6,15 @@ from typing import List
 from ecrm_api.core.persistence.db import get_db
 from ecrm_api.core.presenters import BaseResult, ObjectResult
 
+from ecrm_api.core.functions_jwt import get_user_current
+
 from ecrm_api.modules.accountingentry.presenters.accrelopecategories import AccountingRelOperationsCategoriesBase
 from ecrm_api.modules.accountingentry.services.accrelopecategories import get_all, new, delete
 
 accountingentry_router = APIRouter(
     prefix="/accountingentry",
-    tags=["Comprobante Contable"],
-    # dependencies=[Depends(JWTBearer())]
+    tags=["Operaciones Contables"],
+    dependencies=[Depends(get_user_current)]
 )
 
 @accountingentry_router.get("/", response_model=ObjectResult, summary="Obtener las catgorias por Tipos de Operación")

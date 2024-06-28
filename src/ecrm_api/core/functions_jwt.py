@@ -3,9 +3,14 @@ from jwt import exceptions
 from datetime import datetime, timedelta
 from ecrm_api.core.config import settings
 from fastapi.responses import JSONResponse
+from fastapi import Depends, HTTPException
+from ecrm_api.modules.login.presenters import oauth2_scheme
+from jose import jwt, JWTError
+from ecrm_api.core.config import settings
+from ecrm_api.modules.login.services import get_login_user
 
 def expire_date(minutes: int):
-    expire = datetime.utcnow() + timedelta(minutes=minutes)
+    expire = datetime.now() + timedelta(minutes=minutes)
     return expire
 
 def write_token(data: dict):
@@ -25,3 +30,20 @@ def validate_token(token, output=False):
 def get_current_user(request):
     token = request.headers["authorization"].split(" ")[1]
     return decode(token, key=settings.secret, algorithms=[settings.algorithm])
+
+def get_user_current(token: str = Depends(oauth2_scheme)): 
+    try:
+        token_decode = jwt.decode(token, key=settings.secret, algorithms=["HS256"])
+        username = token_decode.get("sub")
+              
+        if username == None:
+            raise HTTPException(status_code=401, detail="No existe el usuario", headers={"WWW-Authenticate": "Bearer"})            
+    except JWTError as e:
+        print(e)
+        raise HTTPException(status_code=401, detail="Token incorreto o ha expirado", headers={"WWW-Authenticate": "Bearer"})
+
+    user = get_login_user(token)
+    if not user:
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas", headers={"WWW-Authenticate": "Bearer"})
+
+    return user
