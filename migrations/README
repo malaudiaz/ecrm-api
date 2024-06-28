@@ -1,1 +1,8 @@
 Generic single-database configuration.
+
+Migraciones.
+Crear fichero de migración
+    poetry run alembic revision --autogenerate -m 'add news table'  
+
+Ejecutar migraciones
+    alembic upgrade head
