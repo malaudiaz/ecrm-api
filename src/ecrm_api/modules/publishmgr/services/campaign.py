@@ -85,40 +85,37 @@ def delete(request, eid:str, db: Session):
         print(e)
         raise HTTPException(status_code=404)
        
-def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session):  
-    locale = request.headers["accept-language"].split(",")[0].split("-")[0];
-    
+def get_all(request:Request, query: str, page: int, per_page: int, db: Session):  
+    # locale = request.headers["accept-language"].split(",")[0].split("-")[0];
+       
     str_from = "FROM publishmgr.publish_campaign camp "  
-    
+
     str_count = "Select count(*) " + str_from
+   
     str_query = "Select camp.eid, camp.year, camp.name " + str_from
-    
+
     str_where = " WHERE camp.is_active is True "  
     
-    str_where += " AND (camp.name ilike '%" + criteria_value + "%' OR camp.year ilike '%" + criteria_value + "%')" if criteria_value else ''
-    
-    # search_query = '{0}'.format(criteria_value)
-    # search_chain = (PublishDepartament.name.ilike(search_query), PublishDepartament.code.ilike(search_query))
-    # str_where = or_(*search_chain)
-    
+    str_where += " AND (camp.name ilike '%" + query + "%' OR camp.year ilike '%" + query + "%')" if query else ''
+        
     str_count += str_where
     str_query += str_where
     
-    result = BaseResult 
-    if page and page > 0 and not per_page:
-        raise HTTPException(status_code=404, detail=("commun.invalid_param"))
-    
-    result = get_result_count(page=page, per_page=per_page, str_count=str_count, db=db)
-    
+    result = ObjectResult 
+     
     str_query += " ORDER BY camp.year " 
     
+    result = get_result_count(page=page, per_page=per_page, str_count=str_count, db=db)  
+           
     if page != 0:
         str_query += "LIMIT " + str(per_page) + " OFFSET " + str(page*per_page-per_page)
-     
+             
     lst_data = db.execute(text(str_query))
     
     result.data = [create_dict_row(item) for item in lst_data]
-    
+
+    # print(result.__dict__)
+
     return result
 
 def create_dict_row(item):

@@ -70,7 +70,7 @@ def auth(formdata: OAuth2PasswordRequestForm, db: Session):
     if pwd_context.verify(formdata.password, password):
         token_data = {"sub": username}
         user_data = {"username": username, "id": user_id, "name": display_name, "profile":'', 'image':''}
-
+              
         response = JSONResponse(content={"access_token":write_token(data=token_data), "token_type":"bearer", "user": user_data},
                                 status_code=200)
 

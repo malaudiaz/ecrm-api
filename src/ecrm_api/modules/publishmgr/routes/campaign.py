@@ -4,7 +4,7 @@ from fastapi import Depends, Request
 from ecrm_api.core.auth_bearer import JWTBearer
 from typing import List
 from ecrm_api.core.persistence.db import get_db, get_ext_db
-from ecrm_api.core.presenters import BaseResult
+from ecrm_api.core.presenters import BaseResult, ObjectResult
 
 from ecrm_api.core.functions_jwt import get_user_current
 
@@ -25,20 +25,19 @@ publishcampaign_router = APIRouter(
 
 @publishcampaign_router.get(
     "/",
-    response_model=BaseResult,
+    response_model=ObjectResult,
     summary="Obtener todas las campañas",
     dependencies=[Depends(get_user_current)],
 )
 async def get_campaigns(
     request: Request,
+    query: str = "",
     page: int = 1,
-    per_page: int = 6,
-    search: str = "",
+    per_page: int = 10,
     db: Session = Depends(get_db)
 ):
     return get_all(
-        request=request, page=page, per_page=per_page, criteria_value=search, db=db)
-
+        request=request, query=query, page=page, per_page=per_page, db=db)
 
 @publishcampaign_router.get(
     "/{id}",

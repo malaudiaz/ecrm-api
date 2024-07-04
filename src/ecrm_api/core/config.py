@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     secret: str
     access_token_expire_minutes: int    
     algorithm: str
+    items_per_page: int
     default_password: str
           
     log_format_dev: str
