@@ -31,13 +31,13 @@ publishdepartment_router = APIRouter(
 )
 async def get_departments(
     request: Request,
+    query: str = "",
     page: int = 1,
-    per_page: int = 6,
-    search: str = "",
+    per_page: int = 10,
     db: Session = Depends(get_db)
 ):
     return get_all(
-        request=request, page=page, per_page=per_page, criteria_value=search, db=db)
+        request=request, query=query, page=page, per_page=per_page, db=db)
 
 
 @publishdepartment_router.get(
