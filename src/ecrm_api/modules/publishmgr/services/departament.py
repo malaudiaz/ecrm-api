@@ -120,7 +120,6 @@ def get_all(request:Request, query: str, page: int, per_page: int, db: Session):
 
     str_where = " WHERE dpto.is_active is True "  
     
-    str_where += " AND (dpto.name ilike '%" + query + "%' OR camp.year ilike '%" + query + "%')" if query else ''
     str_where += " AND (dpto.name ilike '%" + query + "%' OR dpto.code ilike '%" + query + "%')" if query else ''
         
     str_count += str_where
@@ -128,7 +127,7 @@ def get_all(request:Request, query: str, page: int, per_page: int, db: Session):
     
     result = ObjectResult 
      
-    str_query += " ORDER BY camp.year " 
+    str_query += " ORDER BY dpto.code " 
     
     result = get_result_count(page=page, per_page=per_page, str_count=str_count, db=db)  
            
