@@ -102,7 +102,7 @@ def delete(request, eid:str, db: Session):
         print(e)
         raise HTTPException(status_code=404)
        
-def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session):  
+def get_all(request:Request, page: int, per_page: int, query: str, db: Session):  
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
     
     str_from = "FROM publishmgr.publish_specialists spe " +\
@@ -113,8 +113,8 @@ def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: 
     
     str_where = " WHERE spe.is_active is True "  
     
-    str_where += " AND (spe.user_name ilike '%" + criteria_value +\
-        "%' OR dpto.name ilike '%" + criteria_value + "%'" + "OR spe.code ilike '%" + criteria_value + "%')" if criteria_value else ''
+    str_where += " AND (spe.user_name ilike '%" + query +\
+        "%' OR dpto.name ilike '%" + query + "%'" + "OR spe.code ilike '%" + query + "%')" if query else ''
     
     # search_query = '{0}'.format(criteria_value)
     # search_chain = (PublishDepartament.name.ilike(search_query), PublishDepartament.code.ilike(search_query))

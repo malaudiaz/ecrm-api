@@ -32,12 +32,12 @@ publishspecialist_router = APIRouter(
 async def get_specialists(
     request: Request,
     page: int = 1,
-    per_page: int = 6,
-    search: str = "",
+    per_page: int = 10,
+    query: str = "",
     db: Session = Depends(get_db)
 ):
     return get_all(
-        request=request, page=page, per_page=per_page, criteria_value=search, db=db)
+        request=request, page=page, per_page=per_page, query=query, db=db)
 
 
 @publishspecialist_router.get(
