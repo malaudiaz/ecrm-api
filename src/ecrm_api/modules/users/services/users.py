@@ -151,17 +151,18 @@ def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: 
         str_query += "LIMIT " + str(per_page) + " OFFSET " + str(page*per_page-per_page)
     
     lst_data = db.execute(text(str_query)).all()
-    # result.data = [create_dict_row(item) for item in lst_data]
-    lsr_result_data = [create_dict_row(item) for item in lst_data]
+    result.data = [create_dict_row(item) for item in lst_data]
     
-    str_domino = "SELECT * FROM federations.federations ORDER BY id ASC"
-    lst_dom = ext_db.execute(text(str_domino)).all()
+    # probando trabajar con dos bases de datos distintas.
+    # lsr_result_data = [create_dict_row(item) for item in lst_data]
     
-    lst_all_dom = []
-    for item in lst_dom:
-        lst_all_dom.append({'id': item.id, 'name': item.name})
+    # str_domino = "SELECT * FROM federations.federations ORDER BY id ASC"
+    # lst_dom = ext_db.execute(text(str_domino)).all()
     
-    result.data = {'users': lsr_result_data, 'fed': lst_all_dom}
+    # lst_all_dom = []
+    # for item in lst_dom:
+    #     lst_all_dom.append({'id': item.id, 'name': item.name})
+    # result.data = {'users': lsr_result_data, 'fed': lst_all_dom}
     
     return result
 

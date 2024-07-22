@@ -105,7 +105,7 @@ def delete(request, eid:str, db: Session):
 def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: Session):  
     locale = request.headers["accept-language"].split(",")[0].split("-")[0];
     
-    str_from = "FROM FROM publishmgr.publish_specialists spe " +\
+    str_from = "FROM publishmgr.publish_specialists spe " +\
         "JOIN publishmgr.publish_departament dpto ON dpto.eid = spe.publish_departament_eid "  
     
     str_count = "Select count(*) " + str_from
@@ -123,7 +123,7 @@ def get_all(request:Request, page: int, per_page: int, criteria_value: str, db: 
     str_count += str_where
     str_query += str_where
     
-    result = BaseResult 
+    result = ObjectResult 
     if page and page > 0 and not per_page:
         raise HTTPException(status_code=404, detail=("commun.invalid_param"))
     

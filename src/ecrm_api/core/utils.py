@@ -15,6 +15,6 @@ def get_result_count(page: int, per_page: int, str_count: str, db: Session):
         result.total = db.execute(text(str_count)).scalar()
         result.total_pages=result.total/result.per_page if (result.total % result.per_page == 0) else math.trunc(result.total / result.per_page) + 1
     else:
-        result = BaseResult()
+        result = ObjectResult()
                
     return result

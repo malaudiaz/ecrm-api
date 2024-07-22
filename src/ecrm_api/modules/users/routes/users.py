@@ -5,7 +5,7 @@ from ecrm_api.core.auth_bearer import JWTBearer
 from ecrm_api.modules.users.presenters.users import Users
 from typing import List
 from ecrm_api.core.persistence.db import get_db, get_ext_db
-from ecrm_api.core.presenters import BaseResult
+from ecrm_api.core.presenters import BaseResult, ObjectResult
 
 from ecrm_api.core.functions_jwt import get_user_current
 
@@ -32,7 +32,7 @@ users_router = APIRouter(
 
 @users_router.get(
     "/",
-    response_model=BaseResult,
+    response_model=ObjectResult,
     summary="Obtener todos los usuarios",
     dependencies=[Depends(get_user_current)],
 )
