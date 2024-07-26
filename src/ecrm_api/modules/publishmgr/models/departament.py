@@ -18,7 +18,7 @@ class PublishDepartament(Base):
     eid = Column(String, primary_key=True, default=generate_uuid)
     code = Column(Unicode(10), nullable=False)
     name = Column(Unicode(120), nullable=False)
-    comercial_group_eid = Column(Unicode(24), ForeignKey("crm.comercial_groups.eid"), index=True, nullable=False)
+    comercial_group_eid = Column(Unicode(24), nullable=True) #, ForeignKey("crm.comercial_groups.eid"), index=True, nullable=True)
     
     store_code_legal = Column(Unicode(6))
     store_code_natural = Column(Unicode(6))

@@ -36,7 +36,7 @@ def new(request, publishdepartament: PublishDepartamentBase, db: Session):
     
     eid = str(uuid.uuid4())
     db_one_department = PublishDepartament(eid=eid, code=publishdepartament.code, name=publishdepartament.name,
-                                           comercial_group_eid=publishdepartament.comercial_group_eid,
+                                        #    comercial_group_eid=publishdepartament.comercial_group_eid,
                                            store_code_legal=publishdepartament.store_code_legal, 
                                            store_code_natural=publishdepartament.store_code_natural,
                                            is_active=True)
