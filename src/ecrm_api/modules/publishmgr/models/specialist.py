@@ -4,6 +4,7 @@ import uuid
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.sql.sqltypes import String, Boolean, Integer, Unicode
+from sqlalchemy.orm import relationship, backref
 from ecrm_api.core.persistence.db import Base
 
 def generate_uuid():
@@ -16,10 +17,13 @@ class PublishSpecialists(Base):
     __table_args__ = {'schema' : 'publishmgr'}
     
     eid = Column(String, primary_key=True, default=generate_uuid)
-    user_name = Column(String(24), nullable=False, unique=True)
+    user_name = Column(String(24), ForeignKey("usermgr.users.user_name"), nullable=False, unique=True)
     code = Column(Unicode(10))
     
     publish_departament_eid = Column(String, ForeignKey("publishmgr.publish_departament.eid"), nullable=False)
+    
+    user = relationship('Users')
+    departament = relationship('PublishDepartament')
     
     is_active = Column(Boolean, nullable=False, default=True)
     
