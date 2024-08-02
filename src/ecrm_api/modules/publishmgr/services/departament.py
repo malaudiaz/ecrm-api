@@ -62,7 +62,7 @@ def update(request, eid:str, publishdepartament: PublishDepartamentBase, db: Ses
     if not db_one_department:
         raise HTTPException(status_code=404, detail=("publishmgr.not_exist"))
     
-    if publishdepartament.code and db_one_department != publishdepartament.code:
+    if publishdepartament.code and db_one_department.code != publishdepartament.code:
         department_by_code =  get_one_by_code(publishdepartament.code, db=db)
         if department_by_code:
             raise HTTPException(status_code=404, detail=("publishmgr.code_department_exist"))
@@ -71,9 +71,9 @@ def update(request, eid:str, publishdepartament: PublishDepartamentBase, db: Ses
     if publishdepartament.name and db_one_department.name != publishdepartament.name:
         db_one_department.name = publishdepartament.name
     
-    if publishdepartament.comercial_group_eid and db_one_department.comercial_group_eid != publishdepartament.comercial_group_eid:
-        # verificar que existe el crm
-        db_one_department.comercial_group_eid = publishdepartament.comercial_group_eid
+    # if publishdepartament.comercial_group_eid and db_one_department.comercial_group_eid != publishdepartament.comercial_group_eid:
+    #     # verificar que existe el crm
+    #     db_one_department.comercial_group_eid = publishdepartament.comercial_group_eid
     
     if publishdepartament.store_code_legal and db_one_department.store_code_legal != publishdepartament.store_code_legal:    
         db_one_department.store_code_legal = publishdepartament.store_code_legal
