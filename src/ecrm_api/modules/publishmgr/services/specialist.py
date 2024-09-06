@@ -123,11 +123,12 @@ def get_all(request:Request, page: int, per_page: int, query: str, db: Session):
     
     str_count = "Select count(*) " + str_from
     str_query = "Select spe.eid, spe.code, spe.user_name, users.display_name, " +\
-        "spe.publish_departament_eid, dpto.name as departament_name " + str_from
+        "spe.publish_departament_eid, spe.is_active, dpto.name as departament_name " + str_from
     
-    str_where = " WHERE spe.is_active is True "  
+    # lo que tenia antes de que Migue los pidiera todos
+    # str_where = " WHERE spe.is_active is True "  
     
-    str_where += " AND (spe.user_name ilike '%" + query +\
+    str_where = " WHERE (spe.user_name ilike '%" + query +\
         "%' OR dpto.name ilike '%" + query + "%'" + "OR spe.code ilike '%" + query + "%')" if query else ''
     
     # search_query = '{0}'.format(criteria_value)
@@ -159,7 +160,8 @@ def create_dict_row(item):
     new_row = {'eid': item.eid, 'code' : item.code, 'user_name': item.user_name, 
                'display_name': item.display_name if item.display_name else '',
                'publish_departament_eid': item.publish_departament_eid if item.publish_departament_eid else '', 
-               'publish_departament_name': item.departament_name if item.departament_name else ''}
+               'publish_departament_name': item.departament_name if item.departament_name else '',
+               'is_active': item.is_active}
     return new_row
 
 def get_one(request:Request, eid: str, db: Session):  
@@ -177,7 +179,8 @@ def get_one(request:Request, eid: str, db: Session):
     result.data = {'eid': db_one.eid, 'code' : db_one.code, 'user_name': db_one.user_name, 
                    'display_name': db_one.user.display_name if db_one.user and db_one.user.display_name else '',
                    'publish_departament_eid': db_one.publish_departament_eid if db_one.publish_departament_eid else '', 
-                   'publish_departament_name': db_one.departament.name if db_one.departament and db_one.departament.name else ''}
+                   'publish_departament_name': db_one.departament.name if db_one.departament and db_one.departament.name else '',
+                   'is_active': db_one.is_active}
 
     return result
 
